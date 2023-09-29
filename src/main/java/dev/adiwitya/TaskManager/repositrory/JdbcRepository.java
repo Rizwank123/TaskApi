@@ -1,4 +1,4 @@
-package dev.adiwitya.TaskManager.repository;
+package dev.adiwitya.TaskManager.repositrory;
 
 import java.util.List;
 
@@ -9,8 +9,9 @@ public interface JdbcRepository {
 	Task save(Task task);
 	List<Task> findAll();
 	Task findById(long taskId);
-	Task update(long id,Task task);
-	void delete(long taskId);
+	Task update(Task task);
+	void delete(Task task);
+	void updateStatus(Task task);
 	
 	
 

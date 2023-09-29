@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import dev.adiwitya.TaskManager.entity.Priority;
 import dev.adiwitya.TaskManager.entity.Task;
 
-public class TaskRowMapper implements RowMapper<Task> {
+public class TaskMapper implements RowMapper<Task> {
 
 	
         @Override
@@ -18,7 +18,8 @@ public class TaskRowMapper implements RowMapper<Task> {
                 rs.getString("name"),
                 rs.getString("description"),
                 Priority.valueOf(rs.getString("priority")),
-                rs.getTimestamp("due_date")
+                rs.getTimestamp("due_date"),
+                rs.getString("status")
             );
         }
     

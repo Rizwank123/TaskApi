@@ -10,5 +10,6 @@ public interface TaskService {
 	public List<Task> getAllTask();
 	public Task updateTask(long taskId,Task task);
 	public Task getTaskById(long taskId);
+	public void markAsCompleted(long taskId,String status );
 
 }

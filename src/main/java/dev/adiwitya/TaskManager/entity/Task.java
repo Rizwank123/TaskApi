@@ -16,8 +16,9 @@ public class Task {
 	private String name;
 	private String description;
 	private Priority priority;
+	private String status;
 	Timestamp dueDate;
-	public Task(String name, String description, String priority,Timestamp dueDate) {
+	public Task(String name, String description, String priority,Timestamp dueDate,String status) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -32,14 +33,16 @@ public class Task {
 	        throw new IllegalArgumentException("Priority cannot be null");
 	    }
 		this.dueDate = dueDate;
+		this.status=status;
 	}
-	public Task(long taskId, String name, String description, Priority priority, Timestamp timestamp) {
+	public Task(long taskId, String name, String description, Priority priority, Timestamp timestamp,String status) {
 		super();
 		this.taskId = taskId;
 		this.name = name;
 		this.description = description;
 		this.priority = priority;
 		this.dueDate = timestamp;
+		this.status=status;
 	}
 	
 

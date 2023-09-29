@@ -13,13 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.adiwitya.TaskManager.entity.Task;
 import dev.adiwitya.TaskManager.service.TaskService;
 
+
 @RestController
 @RequestMapping("/api")
+//@Tag(name="Task Manager",description = "Task manager end points")
 public class TaskController {
 	
 	@Autowired
@@ -46,6 +49,11 @@ public class TaskController {
 	@GetMapping("/tasks/{taskId}")
 	public ResponseEntity<Task> getTaskById(@PathVariable long taskId){
 		return ResponseEntity.ok(taskService.getTaskById(taskId));
+	}
+	@PatchMapping("/tasks/{taskId}")
+	public ResponseEntity<String> updateTaskStatus(@PathVariable long taskId,@RequestParam String status){
+		taskService.markAsCompleted(taskId, status);
+		return ResponseEntity.ok("Successfully update ");
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dev.adiwitya.TaskManager.Exception.ResourceNotFoundException;
 import dev.adiwitya.TaskManager.entity.Task;
 import dev.adiwitya.TaskManager.repositrory.TaskRepository;
 
@@ -21,7 +22,10 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public void deleteTask(long id) {
-		taskRepo.delete(id);
+		
+		Task tsk =taskRepo.findById(id);
+		if(tsk==null) throw new ResourceNotFoundException("task Not found", "taskId ", id);
+		taskRepo.delete(tsk);
 
 	}
 
@@ -32,15 +36,27 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public Task updateTask(long taskId, Task task) {
-		// TODO Auto-generated method stub
-		return taskRepo.update(taskId, task);
+	public Task updateTask(long taskId, Task task)  {
+		Task tsk=taskRepo.findById(taskId);
+		if(tsk==null ) throw new ResourceNotFoundException("task Not found", "TaskId ", taskId);
+		
+		return taskRepo.update( tsk);
 	}
 
 	@Override
 	public Task getTaskById(long taskId) {
-		// TODO Auto-generated method stub
+		Task tsk=taskRepo.findById(taskId);
+		if(tsk==null) throw new ResourceNotFoundException("task Not found", "TaskId ", taskId);
 		return taskRepo.findById(taskId);
 	}
+
+	@Override
+	public void markAsCompleted(long id,String status) {
+		Task tsk= taskRepo.findById(id);
+		if(tsk==null) throw new ResourceNotFoundException("task Not found", "taskId ", id);
+		tsk.setStatus(status);
+		taskRepo.updateStatus(tsk);
+	}
+	
 
 }
