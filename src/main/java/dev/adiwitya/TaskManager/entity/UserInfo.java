@@ -1,5 +1,8 @@
 package dev.adiwitya.TaskManager.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +21,7 @@ public class UserInfo {
 	private int id;
     private String name;
     private String email;
+    @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
     private String roles;
 

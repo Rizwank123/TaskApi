@@ -1,6 +1,6 @@
 package dev.adiwitya.TaskManager.service;
 
-import java.sql.Timestamp;
+
 import java.util.List;
 import java.util.Date;
 
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import dev.adiwitya.TaskManager.Exception.ResourceNotFoundException;
 import dev.adiwitya.TaskManager.entity.Task;
 import dev.adiwitya.TaskManager.repositrory.TaskRepository;
@@ -19,6 +18,8 @@ public class TaskServiceImpl implements TaskService {
 
 	@Autowired
 	private TaskRepository taskRepo;
+	
+	
 	@Override
 	public Task createTask(Task task) {
 		task.setDueDate(timeFormater(task.getDueDate()));
@@ -61,7 +62,8 @@ public class TaskServiceImpl implements TaskService {
 	public Task getTaskById(long taskId) {
 		Task tsk=taskRepo.findById(taskId);
 		if(tsk==null) throw new ResourceNotFoundException("task Not found", "TaskId ", taskId);
-		return taskRepo.findById(taskId);
+		tsk.setDueDate(timeFormater(tsk.getDueDate()));
+		return tsk;
 	}
 
 	@Override
@@ -71,18 +73,18 @@ public class TaskServiceImpl implements TaskService {
 		tsk.setStatus(status);
 		taskRepo.updateStatus(tsk);
 	}
-	private static Timestamp timeFormater(Timestamp timestamp) {
-		 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static Date timeFormater(Date timestamp) {
+		 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm ");
 
 	        // Format the Timestamp as a String
-	        String formattedTime = dateFormat.format(new Date(timestamp.getTime()));
+	        String formattedTime = dateFormat.format(timestamp);
 
 	        try {
 	            // Parse the formatted String back to a Date
 	            Date parsedDate = dateFormat.parse(formattedTime);
 
 	            // Create a new Timestamp from the parsed Date
-	            return new Timestamp(parsedDate.getTime());
+	            return parsedDate;
 	        } catch (ParseException e) {
 	            // Handle parsing exceptions here
 	            e.printStackTrace();

@@ -1,6 +1,11 @@
 package dev.adiwitya.TaskManager.entity;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,8 +22,9 @@ public class Task {
 	private String description;
 	private Priority priority;
 	private String status;
-	Timestamp dueDate;
-	public Task(String name, String description, String priority,Timestamp dueDate,String status) {
+	@JsonFormat(pattern = "dd/MM/yyyy h:MM a")
+	Date dueDate;
+	public Task(String name, String description, String priority,Date dueDate,String status) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -35,7 +41,7 @@ public class Task {
 		this.dueDate = dueDate;
 		this.status=status;
 	}
-	public Task(long taskId, String name, String description, Priority priority, Timestamp timestamp,String status) {
+	public Task(long taskId, String name, String description, Priority priority, Date timestamp,String status) {
 		super();
 		this.taskId = taskId;
 		this.name = name;

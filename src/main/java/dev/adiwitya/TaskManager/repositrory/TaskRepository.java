@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.*;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -37,7 +38,8 @@ public class TaskRepository implements JdbcRepository {
 			ps.setString(1, task.getName());
 			ps.setString(2, task.getDescription());
 			ps.setString(3, task.getPriority().name());
-			ps.setTimestamp(4, task.getDueDate());
+			Timestamp timeStmp=new Timestamp(task.getDueDate().getTime());
+			ps.setTimestamp(4, timeStmp);
 			ps.setString(5, task.getStatus());
 			return ps;
 		}, keyHolder);
